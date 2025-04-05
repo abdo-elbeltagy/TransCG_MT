@@ -198,11 +198,12 @@ class ConfigBuilder(object):
         from datasets.cleargrasp import ClearGraspRealWorld, ClearGraspSynthetic
         from datasets.omniverse_object import OmniverseObject
         from datasets.transparent_object import TransparentObject
+        from datasets.surgical_depth import POPSurgicalDataset
         if dataset_params is None:
             dataset_params = self.dataset_params
-        dataset_params = dataset_params.get(split, {'type': 'transcg'})
+        dataset_params = dataset_params.get(split, {'type': 'surgical_depth'})
         if type(dataset_params) == dict:
-            dataset_type = str.lower(dataset_params.get('type', 'transcg'))
+            dataset_type = str.lower(dataset_params.get('type', 'surgical_depth'))
             if dataset_type == 'transcg':
                 dataset = TransCG(split = split, **dataset_params)
             elif dataset_type == 'cleargrasp-real':
@@ -213,6 +214,8 @@ class ConfigBuilder(object):
                 dataset = OmniverseObject(split = split, **dataset_params)
             elif dataset_type == 'transparent-object':
                 dataset = TransparentObject(split = split, **dataset_params)
+            elif dataset_type == 'surgical_depth':
+                dataset = POPSurgicalDataset(split = split, **dataset_params)
             else:
                 raise NotImplementedError('Invalid dataset type: {}.'.format(dataset_type))
             logger.info('Load {} dataset as {}ing set with {} samples.'.format(dataset_type, split, len(dataset)))
@@ -255,7 +258,7 @@ class ConfigBuilder(object):
         
         split: str in ['train', 'test'], optional, default: 'train', the splitted dataset;
         
-        batch_size: int, optional, default: None. If batch_size is None, then the batch size parameter in the self.params will be used to represent the batch size (If still not specified, default: 4);
+        batch_size: int, optional, default: None. Iferwise, the dataset parameters in the self.params will be used to build the dataset; batch_size is None, then the batch size parameter in the self.params will be used to represent the batch size (If still not specified, default: 4);
         
         dataloader_params: dict, optional, default: None. If dataloader_params is provided, then use the parameters specified in the dataloader_params to get the dataloader. Otherwise, the dataloader parameters in the self.params will be used to get the dataloader.
 
