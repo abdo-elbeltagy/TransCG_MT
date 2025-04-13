@@ -1,10 +1,40 @@
   "model":
-    "type": "DFNet"
+    "type": "SwinDRNet"
     "params":
-      "in_channels": 4  # RGB (3) + Simulated Depth (1)
-      "hidden_channels": 64
-      "L": 5
-      "k": 12
+      "config":
+        "DATA":
+          "IMG_SIZE": 224
+        "TRAIN":
+          "USE_CHECKPOINT" : False 
+        "MODEL":
+          "TYPE": swin
+          "NAME": swin_tiny_patch4_window7_224
+          "DROP_RATE" : 0.0
+          # Label Smoothing
+          "LABEL_SMOOTHING" : 0.1
+
+          "DROP_PATH_RATE": 0.2
+          "PRETRAIN_CKPT": "pretrained_model/swin_tiny_patch4_window7_224.pth"
+          "SWIN":
+            "FINAL_UPSAMPLE": "expand_first"
+            "EMBED_DIM": 96
+            "DEPTHS": [ 2, 2, 6, 2 ]
+            "DECODER_DEPTHS": [ 2, 2, 2, 1]
+            "NUM_HEADS": [ 3, 6, 12, 24 ]
+            "WINDOW_SIZE": 7
+            "PATCH_SIZE" : 4
+            "IN_CHANS" : 3
+            "EMBED_DIM" : 96
+            "DEPTHS" : [2, 2, 6, 2]
+            "DECODER_DEPTHS" : [2, 2, 6, 2]
+            "NUM_HEADS" : [3, 6, 12, 24]
+            "WINDOW_SIZE" : 7
+            "MLP_RATIO" : 4.
+            "QKV_BIAS" : True
+            "QK_SCALE" : None
+            "APE" : False
+            "PATCH_NORM" : True
+            "FINAL_UPSAMPLE": "expand_first"
 
   "optimizer":
     "type": "AdamW"
@@ -52,13 +82,12 @@
     "drop_last": True
 
   "trainer":
-    "batch_size": 32
+    "batch_size": 16
     "test_batch_size": 1
     "multigpu": True
     "max_epoch": 40  
     "criterion":
-      # "type": "custom_masked_l1_loss"
-      "type": "custom_masked_mse_loss"
+      "type": "custom_masked_l1_loss"
       "epsilon": 0.00000001
       "combined_smooth": True
       "combined_beta": 0.001

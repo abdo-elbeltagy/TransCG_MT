@@ -76,23 +76,17 @@ class POPSurgicalDataset(Dataset):
         mask = np.array(mask, dtype=np.uint8)
         intrinsics = np.array(sample['intrinsics'], dtype=np.float32).reshape(3, 3)
 
-        # Convert to tensors
-        #rgb_tensor = torch.from_numpy(rgb).permute(2, 0, 1)
-        # depth_gt_tensor = torch.from_numpy(depth_gt).unsqueeze(0)
-        # depth_sim_tensor = torch.from_numpy(depth_sim).unsqueeze(0)
-        # mask_tensor = torch.from_numpy(mask).unsqueeze(0)
-        # intrinsics_tensor = torch.from_numpy(intrinsics)
-
-        #data = {
-        #    'rgb': rgb_tensor,
-        #    'depth_gt': depth_gt_tensor,
-        #    'depth_sim': depth_sim_tensor,
-        #    'mask': mask_tensor,
-        #    'intrinsics': intrinsics_tensor
-        #}
-
-        #if self.transform:
-        #    data = self.transform(data)
-        return process_data(rgb, depth_sim, depth_gt, mask, intrinsics, scene_type = "cluttered", camera_type = 1, split = self.split, image_size = self.image_size, depth_min = self.depth_min, depth_max = self.depth_max, depth_norm = self.depth_norm, use_aug = False, with_original = self.with_original)
+        return process_data(
+            rgb, depth_sim, depth_gt, mask, intrinsics,
+            scene_type = "cluttered",
+            camera_type = 1,
+            split = self.split, 
+            image_size = self.image_size, 
+            depth_min = self.depth_min, 
+            depth_max = self.depth_max, 
+            depth_norm = self.depth_norm, 
+            use_aug = False, 
+            with_original = self.with_original
+            )
 
         #return data
