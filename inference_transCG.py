@@ -22,7 +22,8 @@ class Inferencer(object):
     """
     Inferencer.
     """
-    def __init__(self, cfg_path = os.path.join('configs', 'inference.yaml'), with_info = False, **kwargs):
+    # here we choose wich configs for inference (dreds or trans cg)[inference_DFNet, inference_SwinDRNet]
+    def __init__(self, cfg_path = os.path.join('configs', 'inference_DFNet.yaml'), with_info = False, **kwargs):
         """
         Initialization.
         

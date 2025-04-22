@@ -140,3 +140,7 @@ dmypy.json
 .pyre/
 stats
 stats_old
+/infer
+parsed_metrics*
+training_logs
+training_result_dreds

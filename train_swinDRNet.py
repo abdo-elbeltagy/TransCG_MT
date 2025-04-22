@@ -58,7 +58,7 @@ test_dataloader = builder.get_dataloader(split = 'test')
 logger.info('Checking checkpoints ...')
 start_epoch = 0
 max_epoch = builder.get_max_epoch()
-stats_dir = builder.get_stats_dir()
+stats_dir = builder.get_stats_dir() + "DREDS" 
 checkpoint_file = os.path.join(stats_dir, 'checkpoint.tar')
 if os.path.isfile(checkpoint_file):
     checkpoint = torch.load(checkpoint_file)
@@ -164,11 +164,11 @@ def train(start_epoch):
             'loss': loss,
             'metrics': metrics_result
         }
-        torch.save(save_dict, os.path.join(stats_dir, 'checkpoint-epoch{}.tar'.format(epoch)))
+        torch.save(save_dict, os.path.join(stats_dir , 'checkpoint-epoch{}.tar'.format(epoch)))
         if loss < min_loss:
             min_loss = loss
             min_loss_epoch = epoch + 1
-            torch.save(save_dict, os.path.join(stats_dir, 'checkpoint.tar'.format(epoch)))
+            torch.save(save_dict, os.path.join(stats_dir , 'checkpoint.tar'.format(epoch)))
     logger.info('Training Finished. Min testing loss: {:.6f}, in epoch {}'.format(min_loss, min_loss_epoch))
 
 

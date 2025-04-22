@@ -21,7 +21,7 @@
     "train":
       "type": "surgical_depth"
       "data_dir": "data"
-      "root_dir": "/home/beltagy/Desktop/master_thesis/BlenderProc/examples/datasets/OP_room/output"
+      "root_dir": "/home/beltagy/Desktop/master_thesis/BlenderProc/examples/datasets/OP_room/output_2"
       "rgb_dir": "data/rgb"
       "sim_depth_dir": "data/simulated_depth"
       "gt_depth_dir": "data/perfect_depth"
@@ -35,7 +35,7 @@
     "test":
       "type": "surgical_depth"
       "data_dir": "data"
-      "root_dir": "/home/beltagy/Desktop/master_thesis/BlenderProc/examples/datasets/OP_room/output"
+      "root_dir": "/home/beltagy/Desktop/master_thesis/BlenderProc/examples/datasets/OP_room/output_2_test"
       "rgb_dir": "data/rgb"
       "sim_depth_dir": "data/simulated_depth"
       "gt_depth_dir": "data/perfect_depth"
