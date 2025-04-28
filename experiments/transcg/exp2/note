@@ -1,0 +1,2 @@
+the loss used here is custom_masked_mse_loss and is bad, I want to use the l1 loss better
+the depths are already changed to 0.2  to 2 meters

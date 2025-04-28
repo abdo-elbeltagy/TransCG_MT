@@ -7,25 +7,43 @@ import matplotlib.pyplot as plt
 
 import matplotlib.pyplot as plt
 
-def show_depths_side_by_side(input_depth, pred_depth, gt_depth, titles=None):
-    if titles is None:
-        titles = ["Input Depth", "Predicted Depth", "Ground Truth"]
+# def show_depths_side_by_side(input_depth, pred_depth, gt_depth, titles=None):
+#     if titles is None:
+#         titles = ["Input Depth", "Predicted Depth", "Ground Truth"]
 
-    depths = [input_depth, pred_depth, gt_depth]
-    plt.figure(figsize=(18, 6))
+#     depths = [input_depth, pred_depth, gt_depth]
+#     plt.figure(figsize=(18, 6))
 
-    for i, (depth, title) in enumerate(zip(depths, titles)):
-        plt.subplot(1, 3, i + 1)
-        plt.imshow(depth, cmap='plasma', vmin=0.3, vmax=1.0)
+#     for i, (depth, title) in enumerate(zip(depths, titles)):
+#         plt.subplot(1, 3, i + 1)
+#         plt.imshow(depth, cmap='plasma', vmin=0.3, vmax=2)
+#         plt.title(title)
+#         plt.axis('off')
+#         plt.colorbar(fraction=0.046, pad=0.04)
+
+#     plt.tight_layout()
+#     plt.show()
+
+
+def show_images_and_depths(rgb, input_depth, pred_depth, gt_depth):
+    titles = [
+        "RGB", "Ground Truth Depth",
+        "Simulated Depth (Input)", "Predicted Depth"
+    ]
+    images = [rgb / 255.0, gt_depth, input_depth, pred_depth]
+
+    plt.figure(figsize=(12, 8))
+    for i, (img, title) in enumerate(zip(images, titles)):
+        plt.subplot(2, 2, i + 1)
+        if i == 0:
+            plt.imshow(img)
+        else:
+            plt.imshow(img, cmap='plasma', vmin=0.3, vmax=2)
+            plt.colorbar(fraction=0.046, pad=0.04)
         plt.title(title)
         plt.axis('off')
-        plt.colorbar(fraction=0.046, pad=0.04)
-
     plt.tight_layout()
     plt.show()
-
-
-
 
 
 def draw_point_cloud(color, depth, camera_intrinsics, use_mask = False, use_inpainting = True, scale = 1000.0, inpainting_radius = 5, fault_depth_limit = 0.2, epsilon = 0.01):
@@ -68,16 +86,19 @@ def draw_point_cloud(color, depth, camera_intrinsics, use_mask = False, use_inpa
 
 inferencer = Inferencer()
 
-rgb = np.array(Image.open('infer/azure_kinect_color0_image_0.png'), dtype = np.float32)
-depth = np.array(Image.open('infer/azure_kinect_depth0_image_0.png'), dtype = np.float32)
-depth_gt = np.array(Image.open('infer/depth1-gt.png'), dtype = np.float32)
+# rgb = np.array(Image.open('infer/azure_kinect_color0_image_0.png'), dtype = np.float32)
+# depth = np.array(Image.open('infer/azure_kinect_depth0_image_0.png'), dtype = np.float32)
+# depth_gt = np.array(Image.open('infer/depth1-gt.png'), dtype = np.float32)
+rgb = np.array(Image.open('inference_samples_transcg/scene_000213/bop_data/instrument/train_pbr/000000/rgb/000000.png'), dtype=np.float32)
+depth = np.array(Image.open('inference_samples_transcg/scene_000213/bop_data_new/instrument/train_pbr/000000/depth/000000.png'), dtype=np.float32)
+depth_gt = np.array(Image.open('inference_samples_transcg/scene_000213/bop_data/instrument/train_pbr/000000/depth/000000.png'), dtype=np.float32)
 
 depth = depth / 1000
 depth_gt = depth_gt / 1000
 
 res, _ = inferencer.inference(rgb, depth, depth_coefficient = 3, inpainting = True)
-show_depths_side_by_side(depth, res, depth_gt)
-
+# show_depths_side_by_side(depth, res, depth_gt)
+show_images_and_depths(rgb, depth, res, depth_gt)
 # # cam_intrinsics = np.load('data/camera_intrinsics/1-camIntrinsics-D435.npy')
 # cam_intrinsics = np.array([
 #     [607.2491455078125,       0.0, 639.1669922024012],

@@ -3,7 +3,7 @@ import json
 import csv
 
 # Path to your log file
-log_file_path = "training_logs"  # <-- change this to your actual file
+log_file_path = "output.txt"  # <-- change this to your actual file
 
 # Pattern to capture metrics for each epoch
 pattern = re.compile(
@@ -59,7 +59,7 @@ for match in pattern.finditer(cleaned_content):
     })
 
 # Save as CSV
-with open("parsed_metrics.csv", "w", newline='') as csvfile:
+with open("parsed_metrics_1.csv", "w", newline='') as csvfile:
     fieldnames = results[0].keys()
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
@@ -67,7 +67,7 @@ with open("parsed_metrics.csv", "w", newline='') as csvfile:
         writer.writerow(row)
 
 # Optionally also save as JSON
-with open("parsed_metrics.json", "w") as jsonfile:
+with open("parsed_metrics_1.json", "w") as jsonfile:
     json.dump(results, jsonfile, indent=2)
 
 print(f"Extracted {len(results)} epochs. Saved as parsed_metrics.csv and parsed_metrics.json")
