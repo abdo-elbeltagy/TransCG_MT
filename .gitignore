@@ -146,3 +146,4 @@ training_logs
 training_result_dreds
 /inference_samples
 /inference_samples_transcg
+checkpoint.tar
