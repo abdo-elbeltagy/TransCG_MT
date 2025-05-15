@@ -40,6 +40,6 @@
   "checkpoint_path": "stats/train-surgical-depthDREDS/checkpoint.tar"
   "image_size": !!python/tuple [320, 240]
   "cuda_id": 0
-  "depth_min": 0.1
-  "depth_max": 2.0
+  "depth_min": 0.2 # for multi is 0.1
+  "depth_max": 0.8 # for multi is 2.0
   "depth_norm": 1.0
